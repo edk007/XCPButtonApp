@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#801E1E1E">
+
+
+    <LinearLayout
+        android:id="@+id/accelLinearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_permissions_popup"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_permissions_header"
+            android:elevation="4dp"
+            android:gravity="center"
+            android:text="Permissions Required"
+            android:textAlignment="center"
+            android:textColor="@color/permissionsBGtext"
+            android:textSize="18dp" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            app:srcCompat="@drawable/warning" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="This app needs permissions to location to gather network data, and Knox License and Device Admin for device information."
+            android:textAlignment="center"
+            android:textSize="18dp" />
+
+        <Button
+            android:id="@+id/locationButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_permission_active_layer_list"
+            android:elevation="4dp"
+            android:onClick="getLocationPermission"
+            android:text="Authorize Location"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/deviceAdminButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_permission_active_layer_list"
+            android:elevation="4dp"
+            android:onClick="enableDeviceAdmin"
+            android:text="ENABLE DEVICE ADMIN"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/knoxLicenseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_permission_active_layer_list"
+            android:elevation="4dp"
+            android:onClick="activateKnoxLicense"
+            android:text="ACTIVATE KNOX LICENSE"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/closeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_permission_inactive_layer_list"
+            android:onClick="closePermission"
+            android:text="CLOSE"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

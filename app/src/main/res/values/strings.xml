@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">XCPButtonApp</string>
+
+    <string name="enterprise_device_admin">XCP Button App</string>
+    <string name="enterprise_device_admin_description">DeviceAdmin class</string>
+
+    <!-- License activation messages -->
+    <string name="no_intent">License activation intent is not available</string>
+    <string name="no_intent_action">License activation intent action is not available</string>
+    <string name="klm_action_successful">Action successful</string>
+    <string name="elm_action_successful">Action successful</string>
+
+    <!-- KPE License Error Codes -->
+    <string name="err_klm_internal">KnoxLicenseManager: Internal error</string>
+    <string name="err_klm_internal_server">KnoxLicenseManager: Internal server error</string>
+    <string name="err_klm_licence_invalid_license">KnoxLicenseManager: Invalid license</string>
+    <string name="err_klm_invalid_package_name">KnoxLicenseManager: Invalid package name</string>
+    <string name="err_klm_licence_terminated">KnoxLicenseManager: License terminated</string>
+    <string name="err_klm_network_disconnected">KnoxLicenseManager: Network disconnected</string>
+    <string name="err_klm_network_general">KnoxLicenseManager: Network general error</string>
+    <string name="err_klm_unknown">KnoxLicenseManager: Error unknown</string>
+    <string name="err_klm_code_unknown">KnoxLicenseManager: Error code unknown %1$s, status %2$s</string>
+    <string name="err_klm_not_current_date">KnoxLicenseManager: Not current date</string>
+    <string name="err_klm_sig_mismatch">KnoxLicenseManager: Caller package signature mismatch</string>
+    <string name="err_klm_ver_code_mismatch">KnoxLicenseManager: Caller package version code mismatch</string>
+    <string name="err_klm_null_params">KnoxLicenseManager: NULL params</string>
+    <string name="err_klm_user_disagrees_license_agreement">KLM: User disagrees EULA</string>
+    <string name="err_klm_license_expired">KLM: License expired</string>
+    <string name="err_klm_license_deactivated">KLM: License deactivated</string>
+    <string name="err_klm_license_quantity_exhausted">KLM: License quantity exhausted</string>
+    <string name="err_klm_license_activation_not_found">KLM: License activation not found</string>
+    <string name="err_klm_license_quantity_exhausted_on_auto_release">KLM: License quantity exhausted on automatic release</string>
+
+    <!-- Backwards-Compatible Key Error Codes -->
+    <string name="err_elm_internal">EnterpriseLicenseManager: Internal error</string>
+    <string name="err_elm_internal_server">EnterpriseLicenseManager: Internal server error</string>
+    <string name="err_elm_licence_invalid_license">EnterpriseLicenseManager: Invalid license</string>
+    <string name="err_elm_invalid_package_name">EnterpriseLicenseManager: Invalid package name</string>
+    <string name="err_elm_licence_terminated">EnterpriseLicenseManager: License terminated</string>
+    <string name="err_elm_network_disconnected">EnterpriseLicenseManager: Network disconnected</string>
+    <string name="err_elm_network_general">EnterpriseLicenseManager: Network general error</string>
+    <string name="err_elm_unknown">EnterpriseLicenseManager: Error unknown</string>
+    <string name="err_elm_code_unknown">EnterpriseLicenseManager: Error code unknown %1$s, status %2$s</string>
+    <string name="err_elm_not_current_date">EnterpriseLicenseManager: Not current date</string>
+    <string name="err_elm_sig_mismatch">EnterpriseLicenseManager: Caller package signature mismatch</string>
+    <string name="err_elm_ver_code_mismatch">EnterpriseLicenseManager: Caller package version code mismatch</string>
+    <string name="err_elm_null_params">EnterpriseLicenseManager: NULL params</string>
+    <string name="err_elm_user_disagrees_license_agreement">EnterpriseLicenseManager: User disagrees EULA</string>
+
+</resources>

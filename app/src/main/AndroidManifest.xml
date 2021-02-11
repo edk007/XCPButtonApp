@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.edtest.xcpbuttonapp">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
+    <uses-permission android:name="com.samsung.android.knox.permission.KNOX_HW_CONTROL" />
+    <permission
+        android:name="com.samsung.android.knox.permission.KNOX_HW_CONTROL"
+        android:label="Camera toggle permission"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.samsung.android.knox.permission.KNOX_CUSTOM_SYSTEM"/>
+    <permission
+        android:name="com.samsung.android.knox.permission.KNOX_CUSTOM_SYSTEM"
+        android:label="Custom System"
+        android:protectionLevel="signature"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.XCPButtonApp">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".PermissionsActivity"/>
+
+        <meta-data android:name="com.samsung.knoxlicense.permissions" android:value="true"/>
+
+        <receiver
+            android:name="AdminReceiver"
+            android:description="@string/enterprise_device_admin_description"
+            android:label="@string/enterprise_device_admin"
+            android:permission="android.permission.BIND_DEVICE_ADMIN" >
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/device_admin_receiver" />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name="KnoxLicenseReceiver" >
+            <intent-filter>
+                <action android:name="com.samsung.android.knox.intent.action.KNOX_LICENSE_STATUS" />
+                <action android:name="com.samsung.android.knox.intent.action.LICENSE_STATUS" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>
