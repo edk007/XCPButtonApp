@@ -6,6 +6,7 @@ import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
@@ -33,6 +34,7 @@ import java.util.concurrent.TimeUnit;
 public class PermissionsActivity extends AppCompatActivity {
     public static final String TAG = "XCP_BUTTON_APP";
     public static final String TAG2 = "PERMISSIONS_SCREEN: ";
+    final String SHARED_PREF_KNOX_ACTIVE = "SHARED_PREF_KNOX_ACTIVE";
 
     Button locationButton;
     Button deviceAdminButton;
@@ -48,6 +50,8 @@ public class PermissionsActivity extends AppCompatActivity {
     private static final int DEVICE_ADMIN_ADD_RESULT_ENABLE = 1;
     private ComponentName mDeviceAdmin;
     private DevicePolicyManager mDPM;
+
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +85,8 @@ public class PermissionsActivity extends AppCompatActivity {
             locationButton.setEnabled(false);
             locationGranted = true;
         }
+
+        sharedPreferences = this.getSharedPreferences("com.edtest.xcpbuttonapp", Context.MODE_PRIVATE);
 
         Runnable periodicTask = new Runnable(){
             @Override
@@ -189,14 +195,10 @@ public class PermissionsActivity extends AppCompatActivity {
     } //onResume
 
     private boolean checkKnox() {
-        EnterpriseDeviceManager enterpriseDeviceManager = EnterpriseDeviceManager.getInstance(this);
-        RestrictionPolicy restrictionPolicy = enterpriseDeviceManager.getRestrictionPolicy();
-        boolean isCameraEnabled = restrictionPolicy.isCameraEnabled(false);
-        try {
-            // this is a fake test - if it throws an exception we do not have DA or we do not have an active license
-            boolean result = restrictionPolicy.setCameraState(!isCameraEnabled);
+        boolean kla = sharedPreferences.getBoolean(SHARED_PREF_KNOX_ACTIVE,false);
+        if (kla) {
             return true;
-        } catch (SecurityException e) {
+        }  else {
             return false;
         }
     } //checkKnox

@@ -3,6 +3,7 @@ package com.edtest.xcpbuttonapp;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -12,8 +13,11 @@ import com.samsung.android.knox.license.EnterpriseLicenseManager;
 public class KnoxLicenseReceiver extends BroadcastReceiver {
     public static final String TAG = "DEVICE_TOOLS";
     public static final String TAG2 = "KNOX_LICENSE_RECEIVER: ";
+    final String SHARED_PREF_KNOX_ACTIVE = "SHARED_PREF_KNOX_ACTIVE";
 
     private int DEFAULT_ERROR_CODE = -1;
+
+    SharedPreferences sharedPreferences;
 
     private void showToast(Context context, int msg_res) {
         Toast.makeText(context, context.getResources().getString(msg_res), Toast.LENGTH_SHORT).show();
@@ -27,6 +31,10 @@ public class KnoxLicenseReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         int msg_res = -1;
+
+        sharedPreferences = context.getSharedPreferences("com.edtest.xcpbuttonapp", Context.MODE_PRIVATE);
+
+        boolean knoxLicenseActive = false;
 
         if (intent == null) {
             // No intent action is available
@@ -46,6 +54,8 @@ public class KnoxLicenseReceiver extends BroadcastReceiver {
                     // Key activated or deactivated successfully
                     showToast(context, R.string.klm_action_successful);
                     Log.w(TAG,TAG2 + context.getString(R.string.klm_action_successful));
+                    knoxLicenseActive = true;
+                    sharedPreferences.edit().putBoolean(SHARED_PREF_KNOX_ACTIVE, knoxLicenseActive).apply();
                     return;
                 } else {
                     // activation failed
@@ -111,6 +121,8 @@ public class KnoxLicenseReceiver extends BroadcastReceiver {
                     // Display KLM error message
                     showToast(context, msg_res);
                     Log.w(TAG,TAG2 + context.getString(msg_res));
+                    knoxLicenseActive = false;
+                    sharedPreferences.edit().putBoolean(SHARED_PREF_KNOX_ACTIVE, knoxLicenseActive).apply();
                     return;
                 }
             } else if (action.equals(EnterpriseLicenseManager.ACTION_LICENSE_STATUS)) {

@@ -10,6 +10,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraAccessException;
 import android.os.Build;
@@ -34,6 +35,7 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "XCP_BUTTON_APP";
     public static final String TAG2 = "MAIN_ACTIVITY: ";
+    final String SHARED_PREF_KNOX_ACTIVE = "SHARED_PREF_KNOX_ACTIVE";
 
     ArrayList<String> buttonActions;
     ListView listView;
@@ -45,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
     private DevicePolicyManager mDPM;
     private CustomDeviceManager cdm;
     private SystemManager kcsm;
+
+    SharedPreferences sharedPreferences;
+
 
     //variables to setup timing for the long press
     Runnable longPressRunnable;
@@ -80,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
             mDPM = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
             mDeviceAdmin = new ComponentName(MainActivity.this, AdminReceiver.class);
         }
+
+        sharedPreferences = this.getSharedPreferences("com.edtest.xcpbuttonapp", Context.MODE_PRIVATE);
 
         exec = new ScheduledThreadPoolExecutor(1);
 
@@ -157,14 +164,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean checkKnox() {
-        EnterpriseDeviceManager enterpriseDeviceManager = EnterpriseDeviceManager.getInstance(this);
-        RestrictionPolicy restrictionPolicy = enterpriseDeviceManager.getRestrictionPolicy();
-        boolean isCameraEnabled = restrictionPolicy.isCameraEnabled(false);
-        try {
-            // this is a fake test - if it throws an exception we do not have DA or we do not have an active license
-            boolean result = restrictionPolicy.setCameraState(!isCameraEnabled);
+        boolean kla = sharedPreferences.getBoolean(SHARED_PREF_KNOX_ACTIVE,false);
+        if (kla) {
             return true;
-        } catch (SecurityException e) {
+        }  else {
             return false;
         }
     } //checkKnox
