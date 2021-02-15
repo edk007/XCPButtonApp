@@ -172,7 +172,7 @@ public class PermissionsActivity extends AppCompatActivity {
         KnoxEnterpriseLicenseManager licenseManager = KnoxEnterpriseLicenseManager.getInstance(this);
         try {
             //TODO - ED's Test License Key
-            licenseManager.activateLicense("");
+            licenseManager.activateLicense(getString(R.string.kpe_key));
             Log.w(TAG,TAG2 + "ACTIVATING_KNOX_LICENSE");
 
         } catch (Exception e) {

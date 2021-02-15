@@ -10,8 +10,8 @@ android {
         applicationId "com.edtest.xcpbuttonapp"
         minSdkVersion 29
         targetSdkVersion 30
-        versionCode 141
-        versionName "1.41"
+        versionCode 142
+        versionName "1.42"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
