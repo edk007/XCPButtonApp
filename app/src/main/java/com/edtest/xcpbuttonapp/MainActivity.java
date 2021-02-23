@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "XCP_BUTTON_APP";
     public static final String TAG2 = "MAIN_ACTIVITY: ";
     final String SHARED_PREF_KNOX_ACTIVE = "SHARED_PREF_KNOX_ACTIVE";
+    public static final boolean USE_KNOX = false;
 
     ArrayList<String> buttonActions;
     ListView listView;
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         longPressHandler = new Handler(Looper.getMainLooper());
 
         //SAMSUNG KNOX
-        if (Build.BRAND.equals("samsung")) {
+        if (Build.BRAND.equals("samsung") && USE_KNOX) {
             mDPM = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
             mDeviceAdmin = new ComponentName(MainActivity.this, AdminReceiver.class);
         }
@@ -130,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
         boolean knox = true;
         boolean da = true;
-        if (Build.BRAND.equals("samsung")) {
+        if (Build.BRAND.equals("samsung") && USE_KNOX) {
             knox = checkKnox();
             da = mDPM.isAdminActive(mDeviceAdmin);
         }
@@ -141,20 +142,29 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         } else {
             //setup everything
-            cdm = CustomDeviceManager.getInstance();
-            String permission = "com.samsung.android.knox.permission.KNOX_CUSTOM_SYSTEM";
-            if(cdm.checkEnterprisePermission(permission)) {
-                Log.w(TAG, TAG2 + "KNOX_CUSTOM_SETTING_PERMISSION_GRANTED");
+            if (USE_KNOX) {
+                cdm = CustomDeviceManager.getInstance();
+                String permission = "com.samsung.android.knox.permission.KNOX_CUSTOM_SYSTEM";
+                if (cdm.checkEnterprisePermission(permission)) {
+                    Log.w(TAG, TAG2 + "KNOX_CUSTOM_SETTING_PERMISSION_GRANTED");
+                } else {
+                    Log.w(TAG, TAG2 + "KNOX_CUSTOM_SETTING_PERMISSION_DENIED");
+                }
+                //register receiver
+                kcsm = cdm.getSystemManager();
+                kcsm.setHardKeyIntentState(CustomDeviceManager.ON, KPCCManager.KEYCODE_PTT, (CustomDeviceManager.KEY_ACTION_DOWN | CustomDeviceManager.KEY_ACTION_UP), CustomDeviceManager.ON);
+                kcsm.setHardKeyIntentState(CustomDeviceManager.ON, KPCCManager.KEYCODE_EMERGENCY, (CustomDeviceManager.KEY_ACTION_DOWN | CustomDeviceManager.KEY_ACTION_UP), CustomDeviceManager.ON);
+                IntentFilter intentFilter = new IntentFilter();
+                intentFilter.addAction(cdm.ACTION_HARD_KEY_REPORT);
+                registerReceiver(broadcastReceiver, intentFilter);
             } else {
-                Log.w(TAG, TAG2 + "KNOX_CUSTOM_SETTING_PERMISSION_DENIED");
+                Log.w(TAG, TAG2 + "NO_KNOX_SETUP_RECEIVER");
+                XCPButtonReceiver xcpButtonReceiver = new XCPButtonReceiver();
+                IntentFilter intentFilter = new IntentFilter();
+                intentFilter.addAction("com.edtest.xcpbuttonapp.intent.action.PTT_PRESS");
+                intentFilter.addAction("com.edtest.xcpbuttonapp.intent.action.PTT_RELEASE");
+                registerReceiver(xcpButtonReceiver,intentFilter);
             }
-            //register receiver
-            kcsm = cdm.getSystemManager();
-            kcsm.setHardKeyIntentState(CustomDeviceManager.ON, KPCCManager.KEYCODE_PTT,(CustomDeviceManager.KEY_ACTION_DOWN | CustomDeviceManager.KEY_ACTION_UP),CustomDeviceManager.ON);
-            kcsm.setHardKeyIntentState(CustomDeviceManager.ON,KPCCManager.KEYCODE_EMERGENCY,(CustomDeviceManager.KEY_ACTION_DOWN | CustomDeviceManager.KEY_ACTION_UP),CustomDeviceManager.ON);
-            IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction(cdm.ACTION_HARD_KEY_REPORT);
-            registerReceiver(broadcastReceiver,intentFilter);
         }
     }
 
@@ -217,4 +227,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
+
 }

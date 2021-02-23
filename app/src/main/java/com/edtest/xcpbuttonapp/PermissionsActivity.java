@@ -35,6 +35,7 @@ public class PermissionsActivity extends AppCompatActivity {
     public static final String TAG = "XCP_BUTTON_APP";
     public static final String TAG2 = "PERMISSIONS_SCREEN: ";
     final String SHARED_PREF_KNOX_ACTIVE = "SHARED_PREF_KNOX_ACTIVE";
+    public static final boolean USE_KNOX = false;
 
     Button locationButton;
     Button deviceAdminButton;
@@ -63,7 +64,7 @@ public class PermissionsActivity extends AppCompatActivity {
         knoxLicenseButton = findViewById(R.id.knoxLicenseButton);
         closeButton = findViewById(R.id.closeButton);
 
-        if (Build.BRAND.equals("samsung")) {
+        if (Build.BRAND.equals("samsung") && USE_KNOX) {
             deviceAdminButton.setEnabled(true);
             knoxLicenseButton.setEnabled(true);
             mDPM = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);

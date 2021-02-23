@@ -44,6 +44,16 @@
         <meta-data android:name="com.samsung.knoxlicense.permissions" android:value="true"/>
 
         <receiver
+            android:name=".XCPButtonReceiver"
+            android:permission="com.samsung.android.knox.permission.KNOX_CUSTOM_SETTING"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="com.edtest.xcpbuttonapp.intent.action.PTT_PRESS" />
+                <action android:name="com.edtest.xcpbuttonapp.intent.action.PTT_RELEASE" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
             android:name="AdminReceiver"
             android:description="@string/enterprise_device_admin_description"
             android:label="@string/enterprise_device_admin"
